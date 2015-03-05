@@ -24,3 +24,15 @@ JAX-RS APIs.
 
 The Spring Framework is an open source application framework
 and inversion of control container for the Java platform.
+
+## RESTful API HTTP Methods
+
+GET /users - get the collection (list the users).
+
+GET /users/{userId} - Retrieve a representation of the user of the collection (list the users).
+
+POST /users - Create a new entry (user) in the collection (list the users).
+
+PUT /users/{userId} - Update the user of the collection (list the users).
+
+DELETE /users/{userId} - Delete the user of the collection (list the users).

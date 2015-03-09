@@ -7,15 +7,20 @@
 	<servlet>
 		<servlet-name>RestService</servlet-name>
 		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
-		<!-- Register resources and providers under com.epam.reshetnev.restful -->
+		<!-- Register resources and providers under com.epam.reshetnev.restful.service -->
 		<init-param>
 			<param-name>com.sun.jersey.config.property.packages</param-name>
 			<param-value>com.epam.reshetnev.restful.service</param-value>
+		</init-param>
+		<!-- ???????????????? -->
+		<init-param>
+			<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
+			<param-value>true</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>RestService</servlet-name>
-		<url-pattern>/</url-pattern>
+		<url-pattern>/rest/*</url-pattern>
 	</servlet-mapping>
 </web-app>

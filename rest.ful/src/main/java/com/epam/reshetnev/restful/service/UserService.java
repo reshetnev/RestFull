@@ -10,14 +10,10 @@ import javax.ws.rs.core.MediaType;
 import com.epam.reshetnev.restful.dao.UserDao;
 import com.epam.reshetnev.restful.entity.User;
 
-@Path("users")
+@Path("/users")
 public class UserService {
-    private UserDao userDao;
+    private UserDao userDao = new UserDao();
     
-    public UserService() {
-        userDao = new UserDao();
-    }
-
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Collection<User> getAllUsers() {
@@ -26,9 +22,9 @@ public class UserService {
     }
     
     @GET
-    @Path("{userId}")
+    @Path("/{userId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public User getUserById(Long userId) {
+    public User getUserById(String userId) {
         return userDao.findUserById(userId);
     }
 

@@ -3,28 +3,28 @@ package com.epam.reshetnev.restful.entity;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class User implements Comparable<User> {
-    private Long userId;
+public class User {
+    private String userId;
     private String userName;
     private String login;
     private String password;
 
-    public User(Long userId, String userName, String login, String password) {
-        this.userId = userId;
-        this.userName = userName;
-        this.login = login;
-        this.password = password;
-    }
+    public User(String userId, String userName, String login, String password) {
+		this.userId = userId;
+		this.userName = userName;
+		this.login = login;
+		this.password = password;
+	}
 
-    public Long getUserId() {
-        return userId;
-    }
+	public String getUserId() {
+		return userId;
+	}
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
-    public String getUserName() {
+	public String getUserName() {
         return userName;
     }
 
@@ -48,16 +48,10 @@ public class User implements Comparable<User> {
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "User [userId=" + userId + ", userName=" + userName + ", login="
-                + login + ", password=" + password + "]";
-    }
-
-    @Override
-    public int compareTo(User arg0) {
-        // TODO Auto-generated method stub
-        return 0;
-    }
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", userName=" + userName + ", login="
+				+ login + ", password=" + password + "]";
+	}
 
 }

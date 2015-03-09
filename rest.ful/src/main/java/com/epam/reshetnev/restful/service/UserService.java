@@ -4,15 +4,22 @@ import java.util.Collection;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.epam.reshetnev.restful.dao.UserDao;
 import com.epam.reshetnev.restful.entity.User;
 
+@Component
 @Path("/users")
 public class UserService {
-    private UserDao userDao = new UserDao();
+    
+    @Autowired
+    private UserDao userDao;
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -24,7 +31,7 @@ public class UserService {
     @GET
     @Path("/{userId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public User getUserById(String userId) {
+    public User getUserById(@PathParam("userId") String userId) {
         return userDao.findUserById(userId);
     }
 

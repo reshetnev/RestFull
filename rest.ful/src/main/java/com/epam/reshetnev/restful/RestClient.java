@@ -18,8 +18,8 @@ public class RestClient {
         
         webResource = client.resource("http://localhost:8080/rest.ful/rest/users/2");
         response = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
-//        String output = response.getEntity(String.class);
-//        System.out.println(output);
+        output = response.getEntity(String.class);
+        System.out.println(output);
     }
 
 }

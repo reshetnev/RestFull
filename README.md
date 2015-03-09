@@ -27,7 +27,7 @@ and inversion of control container for the Java platform.
 
 ## RESTful API HTTP Methods
 
-GET /users - get the collection (list the users).
+GET /users - Get the collection (list the users).
 
 GET /users/{userId} - Retrieve a representation of the user of the collection (list the users).
 
@@ -36,3 +36,13 @@ POST /users - Create a new entry (user) in the collection (list the users).
 PUT /users/{userId} - Update the user of the collection (list the users).
 
 DELETE /users/{userId} - Delete the user of the collection (list the users).
+
+### Response Code Status
+
+200 — Successful;
+201 - Successful created;
+400 - Not validated;
+401 — Not Authorized;
+403 — Forbidden;
+404 — Not Found;
+500 — Server error during operation.

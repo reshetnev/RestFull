@@ -22,7 +22,7 @@ public class UserService {
     private UserDao userDao;
     
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Collection<User> getAllUsers() {
         Collection<User> users = userDao.getUsers().values();
         return users;
@@ -30,7 +30,7 @@ public class UserService {
     
     @GET
     @Path("/{userId}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public User getUserById(@PathParam("userId") String userId) {
         return userDao.findUserById(userId);
     }

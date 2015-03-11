@@ -9,16 +9,16 @@ public class User {
     private String login;
     private String password;
 
+    public User() {
+
+    }    
+
     public User(String userId, String userName, String login, String password) {
 		this.userId = userId;
 		this.userName = userName;
 		this.login = login;
 		this.password = password;
 	}
-
-    public User() {
-
-    }
 
     public String getUserId() {
 		return userId;

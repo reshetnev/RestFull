@@ -7,20 +7,12 @@ import com.epam.reshetnev.restful.entity.User;
 
 public class UserDao {
     private ConcurrentMap<String, User> users;
-    private int count = 1;
-    private String key = Integer.toString(count);    
     
     public UserDao() {
         users = new ConcurrentHashMap<String, User>();
-        users.put(key, new User(key,"a","auser","1a"));
-        count++;
-        key = Integer.toString(count);    
-        users.put(key, new User(key,"b","buser","2b"));
-        count++;
-        key = Integer.toString(count);    
-        users.put(key, new User(key,"c","cuser","3c"));        
-        count++;
-        key = Integer.toString(count);    
+        users.put("1", new User("1","a","auser","1a"));
+        users.put("2", new User("2","b","buser","2b"));
+        users.put("3", new User("3","c","cuser","3c"));        
     }
 
     public ConcurrentMap<String, User> getUsers() {
@@ -31,23 +23,18 @@ public class UserDao {
         return users.get(userId);
     }
     
-    public boolean createUser(User user) {
-        boolean result = false;
-        if (!users.containsKey(key)) {
-            users.put(key, user);
-            result = true;
-            count++;
-            key = Integer.toString(count);    
-        }
-        return result;
+    public User createUser(User user) {
+        users.put(user.getUserId(), user);
+        return findUserById(user.getUserId());
     }
     
-    public boolean updateUser(String userId, User newUser) {
-        return users.replace(userId, users.get(userId), newUser);
+    public User updateUser(String userId, User newUser) {
+        return users.replace(userId, newUser);
     }
     
-    public boolean deleteUser(String userId, User user) {
-        return users.remove(userId, user);
+    public ConcurrentMap<String, User> deleteUser(String userId) {
+    	users.remove(userId);
+        return getUsers();
     }
 
 }

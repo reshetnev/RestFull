@@ -1,0 +1,40 @@
+{
+  "swaggerVersion": "1.2",
+  "basePath": "http://localhost:8080/rest.ful/rest/",
+  "apis": [
+    {
+      "path": "/users",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "Get the collection (list the users).",
+          "type": "Response",
+          "nickname": "getUsers",
+          "parameters": [
+            {
+
+            }
+          ]
+        },
+	  "path": "/users/{userId}",
+      "operations": [
+        {
+          "method": "GET",
+          "summary": "Retrieve a representation of the user of the collection (list the users).",
+          "type": "Response",
+          "nickname": "getUserById",
+          "parameters": [
+            {
+              "name": "userId",
+              "description": "The user with userId to be retrieved.",
+              "required": true,
+              "type": "string",
+              "paramType": "path"
+            }
+          ]
+        },
+      ]
+    }
+  ],
+  "models": {}
+}

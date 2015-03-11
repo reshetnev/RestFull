@@ -11,24 +11,24 @@ public class User {
 
     public User() {
 
-    }    
+    }
 
     public User(String userId, String userName, String login, String password) {
-		this.userId = userId;
-		this.userName = userName;
-		this.login = login;
-		this.password = password;
-	}
+        this.userId = userId;
+        this.userName = userName;
+        this.login = login;
+        this.password = password;
+    }
 
     public String getUserId() {
-		return userId;
-	}
+        return userId;
+    }
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-	public String getUserName() {
+    public String getUserName() {
         return userName;
     }
 

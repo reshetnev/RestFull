@@ -23,7 +23,7 @@
 		<version>2.16</version>
 	</dependency>
 	
-	<!-- JSON   -->
+	<!-- Enable Json support -->
 	<dependency>
 		<groupId>com.owlike</groupId>
 		<artifactId>genson</artifactId>

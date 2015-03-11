@@ -19,22 +19,25 @@ public class UserDao {
         return users;
     }
     
-    public User findUserById(String userId) {
+    public User getUserById(String userId) {
         return users.get(userId);
     }
     
-    public User createUser(User user) {
-        users.put(user.getUserId(), user);
-        return findUserById(user.getUserId());
+    public boolean createUser(User user) {
+        boolean result = false;
+        if (!users.containsKey(user.getUserId())) {
+            users.put(user.getUserId(), user);
+            result = true;
+        }
+        return result;
     }
     
-    public User updateUser(String userId, User newUser) {
-        return users.replace(userId, newUser);
+    public boolean updateUser(String userId, User newUser) {
+        return users.replace(userId, users.get(userId), newUser);
     }
     
-    public ConcurrentMap<String, User> deleteUser(String userId) {
-    	users.remove(userId);
-        return getUsers();
+    public boolean deleteUser(String userId) {
+        return users.remove(userId, users.get(userId));
     }
 
 }

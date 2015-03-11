@@ -1,6 +1,6 @@
 package com.epam.reshetnev.restful.service;
 
-import java.util.Collection;
+import java.net.URI;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -11,12 +11,16 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.epam.reshetnev.restful.dao.UserDao;
 import com.epam.reshetnev.restful.entity.User;
+import com.epam.reshetnev.restful.exception.CustomInternalServerError;
+import com.epam.reshetnev.restful.exception.CustomNotFoundException;
 
 @Component
 @Path("/users")
@@ -27,37 +31,53 @@ public class UserService {
     
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Collection<User> getAllUsers() {        
-        return userDao.getUsers().values();
+    public Response getUsers() {        
+        return Response.status(200).entity(userDao.getUsers()).build();
     }
     
     @GET
     @Path("/{userId}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public User getUserById(@PathParam("userId") String userId) {
-        return userDao.findUserById(userId);
+    public Response getUserById(@PathParam("userId") String userId) {
+        User user = userDao.getUserById(userId);
+        if (user == null) {
+          throw new CustomNotFoundException("User with userId = " + userId + " is not found.");
+        }
+        return Response.status(200).entity(user).build();
     }
     
     @POST
     @Path("/create")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public User createUser(User user) {
-    	return userDao.createUser(user);
+    public Response createUser(User user) {
+        URI createdUri = UriBuilder.fromUri("http://localhost:8080/rest/users/"+user.getUserId()).build();
+        boolean result = userDao.createUser(user);
+        if (!result) {
+            throw new CustomInternalServerError("User with userId = " + user.getUserId() + " already exists.");
+        }
+    	return Response.created(createdUri).entity(userDao.getUsers()).build();
     }
     
     @PUT
     @Path("/{userId}")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public User updateUser(@PathParam("userId") String userId, User newUser) {
-    	return userDao.updateUser(userId, newUser);
+    public Response updateUser(@PathParam("userId") String userId, User newUser) {
+        boolean result = userDao.updateUser(userId, newUser);
+        if (!result) {
+            throw new CustomInternalServerError("User with userId = " + userId + " not exists.");
+        }        
+    	return Response.status(200).entity(userDao.getUsers()).build();
     }
     
     @DELETE
     @Path("/{userId}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Collection<User> deleteUser(@PathParam("userId") String userId) {
-    	userDao.deleteUser(userId);
-    	return getAllUsers();
+    public Response deleteUser(@PathParam("userId") String userId) {
+        boolean result = userDao.deleteUser(userId);
+        if (!result) {
+            throw new CustomInternalServerError("User with userId = " + userId + " not exists.");
+        }        
+    	return Response.status(200).entity(userDao.getUsers()).build();
     }
 
 }

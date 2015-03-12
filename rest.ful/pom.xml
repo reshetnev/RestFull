@@ -55,7 +55,7 @@
 	<!--  Swagger Jersey Jaxrs  -->	
 	<dependency>
 		<groupId>com.wordnik</groupId>
-		<artifactId>swagger-jersey-jaxrs_2.10</artifactId>
+		<artifactId>swagger-jersey2-jaxrs_2.10</artifactId>
 		<version>1.3.12</version>
 	</dependency>
 	

@@ -1,6 +1,6 @@
 {
   "swaggerVersion": "1.2",
-  "basePath": "http://localhost:8080/rest.ful/rest/",
+  "basePath": "http://localhost:8080/rest.ful/rest",
   "apis": [
     {
       "path": "/users",

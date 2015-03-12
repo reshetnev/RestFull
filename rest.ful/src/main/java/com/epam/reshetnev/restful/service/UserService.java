@@ -21,23 +21,37 @@ import com.epam.reshetnev.restful.dao.UserDao;
 import com.epam.reshetnev.restful.entity.User;
 import com.epam.reshetnev.restful.exception.CustomInternalServerError;
 import com.epam.reshetnev.restful.exception.CustomNotFoundException;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiResponse;
+import com.wordnik.swagger.annotations.ApiResponses;
 
 @Component
 @Path("/users")
+@Api(value = "/users", description = "Operations about users")
+@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+@Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 public class UserService {
 
     @Autowired
     private UserDao userDao;
 
     @GET
-    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    @ApiOperation(value = "Get the collection (list the users)",
+    response = User.class,
+    responseContainer = "ConcurrentMap")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Ok") })
     public Response getUsers() {
         return Response.status(200).entity(userDao.getUsers()).build();
     }
 
     @GET
     @Path("/{userId}")
-    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+    @ApiOperation(value = "Retrieve a representation of the user.",
+    response = User.class,
+    responseContainer = "User")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Ok"),
+    	      @ApiResponse(code = 404, message = "User not found") })
     public Response getUserById(@PathParam("userId") String userId) {
         User user = userDao.getUserById(userId);
         if (user == null) {
@@ -49,7 +63,6 @@ public class UserService {
 
     @POST
     @Path("/create")
-    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response createUser(User user) {
         URI createdUri = UriBuilder.fromUri(
                 "http://localhost:8080/rest/users/" + user.getUserId()).build();
@@ -63,7 +76,6 @@ public class UserService {
 
     @PUT
     @Path("/{userId}")
-    @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response updateUser(@PathParam("userId") String userId, User newUser) {
         boolean result = userDao.updateUser(userId, newUser);
         if (!result) {
@@ -75,7 +87,6 @@ public class UserService {
 
     @DELETE
     @Path("/{userId}")
-    @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
     public Response deleteUser(@PathParam("userId") String userId) {
         boolean result = userDao.deleteUser(userId);
         if (!result) {

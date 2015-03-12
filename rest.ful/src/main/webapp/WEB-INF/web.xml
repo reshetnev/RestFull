@@ -1,7 +1,9 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
-<web-app>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+	      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	      xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	      version="3.0">
+	      
 	<display-name>Archetype Created Web Application rest.ful</display-name>
 
 	<!-- Register Spring ContextLoaderListener listener class -->	
@@ -13,7 +15,7 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	
-	<!-- Define Jersey Servlet dispatcher -->
+	<!-- Define Jersey+Spring Servlet dispatcher -->
 	<servlet>
 		<servlet-name>JerseyServlet</servlet-name>
 		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
@@ -37,7 +39,7 @@
 	</servlet>
     <servlet-mapping>
         <servlet-name>JerseyServlet</servlet-name>
-        <url-pattern>/rest/*</url-pattern>
+        <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
 	
     <servlet>
@@ -49,8 +51,8 @@
         </init-param>
         <init-param>
             <param-name>swagger.api.basepath</param-name>
-            <param-value>http://localhost:8080/rest.ful/rest</param-value>
+            <param-value>http://localhost:8080/rest.ful/api</param-value>
         </init-param>
         <load-on-startup>2</load-on-startup>
-    </servlet>                   
+    </servlet>
 </web-app>

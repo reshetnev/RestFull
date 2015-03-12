@@ -23,6 +23,7 @@ import com.epam.reshetnev.restful.exception.CustomInternalServerError;
 import com.epam.reshetnev.restful.exception.CustomNotFoundException;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
 import com.wordnik.swagger.annotations.ApiResponse;
 import com.wordnik.swagger.annotations.ApiResponses;
 
@@ -37,22 +38,19 @@ public class UserService {
     private UserDao userDao;
 
     @GET
-    @ApiOperation(value = "Get the collection (list the users)",
-    response = User.class,
-    responseContainer = "ConcurrentMap")
+    @ApiOperation(value = "Get the collection (list the users)", response = User.class, responseContainer = "Collection")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Ok") })
     public Response getUsers() {
-        return Response.status(200).entity(userDao.getUsers()).build();
+        return Response.status(200).entity(userDao.getUsers().values()).build();
     }
 
     @GET
     @Path("/{userId}")
-    @ApiOperation(value = "Retrieve a representation of the user.",
-    response = User.class,
-    responseContainer = "User")
+    @ApiOperation(value = "Retrieve a representation of the user.", response = User.class, responseContainer = "User")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Ok"),
-    	      @ApiResponse(code = 404, message = "User not found") })
-    public Response getUserById(@PathParam("userId") String userId) {
+            @ApiResponse(code = 404, message = "User not found") })
+    public Response getUserById(
+            @ApiParam(value = "userId", required = true) @PathParam("userId") String userId) {
         User user = userDao.getUserById(userId);
         if (user == null) {
             throw new CustomNotFoundException("User with userId = " + userId
@@ -62,38 +60,53 @@ public class UserService {
     }
 
     @POST
-    @Path("/create")
-    public Response createUser(User user) {
+    @ApiOperation(value = "Create a new entry (user).", response = User.class, responseContainer = "Collection")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Successful created"),
+            @ApiResponse(code = 500, message = "User not created") })
+    public Response createUser(
+            @ApiParam(value = "Created user object", required = true) User user) {
         URI createdUri = UriBuilder.fromUri(
-                "http://localhost:8080/rest/users/" + user.getUserId()).build();
+                "http://localhost:8080/rest.ful/api/users/" + user.getUserId())
+                .build();
         boolean result = userDao.createUser(user);
         if (!result) {
             throw new CustomInternalServerError("User with userId = "
                     + user.getUserId() + " already exists.");
         }
-        return Response.created(createdUri).entity(userDao.getUsers()).build();
+        return Response.created(createdUri).entity(userDao.getUsers().values())
+                .build();
     }
 
     @PUT
     @Path("/{userId}")
-    public Response updateUser(@PathParam("userId") String userId, User newUser) {
-        boolean result = userDao.updateUser(userId, newUser);
-        if (!result) {
+    @ApiOperation(value = "Update the user", response = User.class, responseContainer = "Collection")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Ok"),
+            @ApiResponse(code = 500, message = "User not updated") })
+    public Response updateUser(
+            @ApiParam(value = "userId", required = true) @PathParam("userId") String userId,
+            @ApiParam(value = "New user object", required = true) User newUser) {
+        User user = userDao.updateUser(userId, newUser);
+        if (user == null) {
             throw new CustomInternalServerError("User with userId = " + userId
                     + " not exists.");
         }
-        return Response.status(200).entity(userDao.getUsers()).build();
+        return Response.status(200).entity(userDao.getUsers().values()).build();
     }
 
     @DELETE
     @Path("/{userId}")
-    public Response deleteUser(@PathParam("userId") String userId) {
+    @ApiOperation(value = "Delete the user", response = User.class, responseContainer = "Collection")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "Ok"),
+            @ApiResponse(code = 500, message = "User not deleted") })
+    public Response deleteUser(
+            @ApiParam(value = "userId", required = true) @PathParam("userId") String userId) {
         boolean result = userDao.deleteUser(userId);
         if (!result) {
             throw new CustomInternalServerError("User with userId = " + userId
                     + " not exists.");
         }
-        return Response.status(200).entity(userDao.getUsers()).build();
+        return Response.status(200).entity(userDao.getUsers().values()).build();
     }
 
 }

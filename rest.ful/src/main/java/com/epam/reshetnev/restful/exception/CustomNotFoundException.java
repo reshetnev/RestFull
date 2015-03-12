@@ -14,7 +14,7 @@ public class CustomNotFoundException extends WebApplicationException {
      * Create a HTTP 404 (Not Found) exception.
      */
     public CustomNotFoundException() {
-        super(Response.status(404).build());
+        super(Response.status(Response.Status.NOT_FOUND).build());
     }
 
     /**
@@ -24,6 +24,7 @@ public class CustomNotFoundException extends WebApplicationException {
      *            the String that is the entity of the 404 response.
      */
     public CustomNotFoundException(String message) {
-        super(Response.status(404).entity(message).type("text/plain").build());
+        super(Response.status(Response.Status.NOT_FOUND).entity(message)
+                .type("text/plain").build());
     }
 }

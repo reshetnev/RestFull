@@ -1,40 +1,124 @@
 {
-  "swaggerVersion": "1.2",
-  "basePath": "http://localhost:8080/rest.ful/rest",
-  "apis": [
-    {
-      "path": "/users",
-      "operations": [
-        {
-          "method": "GET",
-          "summary": "Get the collection (list the users).",
-          "type": "Response",
-          "nickname": "getUsers",
-          "parameters": [
-            {
+	"swaggerVersion": "1.2",
+	"basePath": "http://localhost:8080/rest.ful/api",
+	"apis": [
+		{
+			"path": "/users",
+			"operations": [
+				{
+					"method": "GET",
+					"summary": "Get the collection (list the users).",
+					"type": "array",
+					"items": {
+						"$ref": "User"
+					},
+					"nickname": "getUsers",
+					"parameters": [
+						{
 
-            }
-          ]
-        },
-	  "path": "/users/{userId}",
-      "operations": [
-        {
-          "method": "GET",
-          "summary": "Retrieve a representation of the user of the collection (list the users).",
-          "type": "Response",
-          "nickname": "getUserById",
-          "parameters": [
-            {
-              "name": "userId",
-              "description": "The user with userId to be retrieved.",
-              "required": true,
-              "type": "string",
-              "paramType": "path"
-            }
-          ]
-        },
-      ]
-    }
-  ],
-  "models": {}
+						}
+					]
+				}
+			]
+		},
+		{
+			"path": "/users/{userId}",
+			"operations": [
+				{
+					"method": "GET",
+					"summary": "Retrieve a representation of the user of the collection (list the users).",
+					"type": "User",
+					"nickname": "getUserById",
+					"parameters": [
+						{
+							"name": "userId",
+							"description": "The user with userId to be retrieved.",
+							"required": true,
+							"type": "string",
+							"paramType": "path"
+						}
+					]
+				}
+			]
+		},
+		{
+			"path": "/users",
+			"operations": [
+				{
+					"method": "POST",
+					"summary": "Create a new entry (user) in the collection (list the users).",
+					"type": "array",
+					"items": {
+						"$ref": "User"
+					},						
+					"nickname": "createUser",
+					"parameters": [
+						{
+							"name": "body",
+							"description": "Create a new entry (user).",
+							"required": true,
+							"type": "User",
+							"paramType": "body",
+							"allowMultiple": false
+						}
+					]
+				}
+			]
+		},
+		{
+			"path": "/users/{userId}",
+			"operations": [
+				{
+					"method": "PUT",
+					"summary": "Update the user of the collection (list the users).",
+					"type": "array",
+					"items": {
+						"$ref": "User"
+					},						
+					"nickname": "updateUser",
+					"parameters": [
+						{
+							"name": "userId",
+							"description": "The user with userId to be updated.",
+							"required": true,
+							"type": "string",
+							"paramType": "path"
+						},						
+						{
+							"name": "body",
+							"description": "New information about User.",
+							"required": true,
+							"type": "User",
+							"paramType": "body",
+							"allowMultiple": false
+						}
+					]
+				}
+			]
+		},
+		{
+			"path": "/users/{userId}",
+			"operations": [
+				{
+					"method": "DELETE",
+					"summary": "Delete the user of the collection (list the users).",
+					"type": "array",
+					"items": {
+						"$ref": "User"
+					},						
+					"nickname": "deleteUser",
+					"parameters": [
+						{
+							"name": "userId",
+							"description": "The user with userId to be deleted.",
+							"required": true,
+							"type": "string",
+							"paramType": "path"
+						},						
+					]
+				}
+			]
+		}			
+	],
+	"models": {}
 }

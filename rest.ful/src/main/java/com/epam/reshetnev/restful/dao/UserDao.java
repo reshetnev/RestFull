@@ -32,8 +32,9 @@ public class UserDao {
         return result;
     }
 
-    public boolean updateUser(String userId, User newUser) {
-        return users.replace(userId, users.get(userId), newUser);
+    public User updateUser(String userId, User newUser) {
+        newUser.setUserId(userId);
+        return users.replace(userId, newUser);
     }
 
     public boolean deleteUser(String userId) {

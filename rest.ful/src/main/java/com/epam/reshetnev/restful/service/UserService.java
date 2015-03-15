@@ -33,11 +33,11 @@ import com.wordnik.swagger.annotations.ApiResponses;
 @Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 @Consumes({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 public class UserService {
-
-    @Autowired
+	
+	@Autowired
     private UserDao userDao;
 
-    @GET
+	@GET
     @ApiOperation(value = "Get the collection (list the users)", response = User.class, responseContainer = "Collection")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Ok") })
     public Response getUsers() {

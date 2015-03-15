@@ -1,4 +1,4 @@
-package com.epam.reshetnev.restful.api;
+package com.epam.reshetnev.restful.test.api;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;

@@ -15,14 +15,6 @@
 		<artifactId>junit</artifactId>
 		<version>4.12</version>
 	</dependency>
-	
-	<!-- TestNg 
-	<dependency>
-		<groupId>org.testng</groupId>
-		<artifactId>testng</artifactId>
-		<version>6.8.21</version>
-	</dependency>          -->
-
 
 	<!-- Mockito -->	
 	<dependency>

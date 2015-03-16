@@ -9,7 +9,7 @@ public class User {
     private String login;
     private String password;
 
-    //For JAXBE
+    // For JAXBE
     public User() {
 
     }

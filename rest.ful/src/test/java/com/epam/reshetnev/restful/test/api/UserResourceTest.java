@@ -16,7 +16,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.epam.reshetnev.restful.entity.User;
-import com.epam.reshetnev.restful.resource.UserResource;
+import com.epam.reshetnev.restful.service.UserResource;
 
 public class UserResourceTest extends JerseyTest {
 

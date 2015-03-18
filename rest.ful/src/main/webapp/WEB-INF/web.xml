@@ -18,12 +18,12 @@
 	<servlet>
 		<servlet-name>JerseyServlet</servlet-name>
 		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
-		<!-- Register resources and providers under com.epam.reshetnev.restful.service -->
+		<!-- Register resources and providers under com.epam.reshetnev.restful.resource -->
 		<init-param>
 			<param-name>jersey.config.server.provider.packages</param-name>
 			<param-value>
 				com.wordnik.swagger.jaxrs.json,
-				com.epam.reshetnev.restful.service
+				com.epam.reshetnev.restful.resource
 			</param-value>
 		</init-param>
 		<init-param>

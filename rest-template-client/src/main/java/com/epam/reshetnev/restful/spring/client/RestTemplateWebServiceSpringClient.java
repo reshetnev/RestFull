@@ -1,5 +1,6 @@
 package com.epam.reshetnev.restful.spring.client;
 
+import java.util.concurrent.ConcurrentMap;
 import java.util.logging.Logger;
 
 import org.springframework.http.HttpStatus;
@@ -7,47 +8,64 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import com.epam.reshetnev.restful.entity.User;
+
 public class RestTemplateWebServiceSpringClient {
 
     private static Logger log = Logger
             .getLogger(RestTemplateWebServiceSpringClient.class.getName());
 
     private RestTemplate restTemplate;
+    private final String url = "http://localhost:8080/rest.ful/api/users/";
 
     public RestTemplateWebServiceSpringClient() {
         restTemplate = new RestTemplate();
     }
-
-    public void get(String url) {
+    
+    @SuppressWarnings("unchecked")
+    public ConcurrentMap<String, User> getUsers() {
         try {
-            restTemplate.getForEntity(url, String.class);
+            ConcurrentMap<String, User> users = restTemplate.getForObject(url, ConcurrentMap.class);
             log.info(HttpStatus.OK + " " + HttpStatus.OK.name());
+            return users;
         } catch (HttpClientErrorException | HttpServerErrorException e) {
             log.info("Error: " + e.getStatusCode() + " " + e.getStatusText());
         }
+        return null;
     }
 
-    public <T> void post(T object, String url) {
+    public User getUserById(String userId) {
         try {
-            restTemplate.postForEntity(url, object, String.class);
+            User user = restTemplate.getForObject(url+userId, User.class);
+            log.info(HttpStatus.OK + " " + HttpStatus.OK.name());
+            return user;
+        } catch (HttpClientErrorException | HttpServerErrorException e) {
+            log.info("Error: " + e.getStatusCode() + " " + e.getStatusText());
+        }
+        return null;
+    }
+
+    public void createUser(User user) {
+        try {
+            restTemplate.postForEntity(url, user, User.class);
             log.info(HttpStatus.CREATED + " " + HttpStatus.CREATED.name());
         } catch (HttpClientErrorException | HttpServerErrorException e) {
             log.info("Error: " + e.getStatusCode() + " " + e.getStatusText());
         }
     }
 
-    public <T> void put(T object, String url) {
+    public void updateUser(User user, String userId) {
         try {
-            restTemplate.put(url, object, String.class);
+            restTemplate.put(url+userId, user, User.class);
             log.info(HttpStatus.OK + " " + HttpStatus.OK.name());
         } catch (HttpClientErrorException | HttpServerErrorException e) {
             log.info("Error: " + e.getStatusCode() + " " + e.getStatusText());
         }
     }
 
-    public void delete(String url) {
+    public void deleteUser(String userId) {
         try {
-            restTemplate.delete(url);
+            restTemplate.delete(url+userId);
             log.info(HttpStatus.OK + " " + HttpStatus.OK.name());
         } catch (HttpClientErrorException | HttpServerErrorException e) {
             log.info("Error: " + e.getStatusCode() + " " + e.getStatusText());

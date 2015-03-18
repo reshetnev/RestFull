@@ -1,4 +1,4 @@
-package com.epam.reshetnev.restful.service;
+package com.epam.reshetnev.restful.resource;
 
 import java.net.URI;
 
@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 import com.epam.reshetnev.restful.dao.UserDao;
 import com.epam.reshetnev.restful.entity.User;
 import com.epam.reshetnev.restful.exception.CustomInternalServerError;
+import com.epam.reshetnev.restful.exception.CustomMethodNotAllowed;
 import com.epam.reshetnev.restful.exception.CustomNotFoundException;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
@@ -41,7 +42,7 @@ public class UserResource {
     @ApiOperation(value = "Get the collection (list the users)", response = User.class, responseContainer = "Collection")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Ok") })
     public Response getUsers() {
-        return Response.status(200).entity(userDao.getUsers().values()).build();
+        return Response.status(200).entity(userDao.getUsers()).build();
     }
 
     @GET
@@ -74,7 +75,7 @@ public class UserResource {
             throw new CustomInternalServerError("User with userId = "
                     + user.getUserId() + " already exists.");
         }
-        return Response.created(createdUri).entity(userDao.getUsers().values())
+        return Response.created(createdUri).entity(userDao.getUsers())
                 .build();
     }
 
@@ -82,16 +83,16 @@ public class UserResource {
     @Path("/{userId}")
     @ApiOperation(value = "Update the user", response = User.class, responseContainer = "Collection")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "Ok"),
-            @ApiResponse(code = 500, message = "User not updated") })
+            @ApiResponse(code = 405, message = "User not updated") })
     public Response updateUser(
             @ApiParam(value = "userId", required = true) @PathParam("userId") String userId,
             @ApiParam(value = "New user object", required = true) User newUser) {
         User user = userDao.updateUser(userId, newUser);
         if (user == null) {
-            throw new CustomInternalServerError("User with userId = " + userId
+            throw new CustomMethodNotAllowed("User with userId = " + userId
                     + " not exists.");
         }
-        return Response.status(200).entity(userDao.getUsers().values()).build();
+        return Response.status(200).entity(userDao.getUsers()).build();
     }
 
     @DELETE
@@ -106,7 +107,7 @@ public class UserResource {
             throw new CustomInternalServerError("User with userId = " + userId
                     + " not exists.");
         }
-        return Response.status(200).entity(userDao.getUsers().values()).build();
+        return Response.status(200).entity(userDao.getUsers()).build();
     }
 
 }

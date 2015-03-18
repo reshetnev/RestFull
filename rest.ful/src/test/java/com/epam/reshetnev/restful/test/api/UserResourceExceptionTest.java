@@ -14,7 +14,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.epam.reshetnev.restful.entity.User;
 import com.epam.reshetnev.restful.exception.CustomNotFoundException;
-import com.epam.reshetnev.restful.service.UserResource;
+import com.epam.reshetnev.restful.resource.UserResource;
 
 public class UserResourceExceptionTest extends JerseyTest {
 
@@ -50,7 +50,7 @@ public class UserResourceExceptionTest extends JerseyTest {
         Entity<User> entity = Entity.entity(user, MediaType.APPLICATION_JSON);
         Response response = target("/users/5").request().put(entity);
         Assert.assertEquals("User with userId = 5 not exists.",
-                response.getStatus(), 500);
+                response.getStatus(), 405);
     }
 
     @Test

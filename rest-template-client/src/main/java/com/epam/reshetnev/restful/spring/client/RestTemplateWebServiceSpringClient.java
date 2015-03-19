@@ -29,7 +29,7 @@ public class RestTemplateWebServiceSpringClient {
             log.info(HttpStatus.OK + " " + HttpStatus.OK.name());
             return users;
         } catch (HttpClientErrorException | HttpServerErrorException e) {
-            log.info("Error: " + e.getStatusCode() + " " + e.getStatusText());
+            log.info(e.getStatusCode() + " " + e.getStatusText());
         }
         return null;
     }
@@ -40,7 +40,7 @@ public class RestTemplateWebServiceSpringClient {
             log.info(HttpStatus.OK + " " + HttpStatus.OK.name());
             return user;
         } catch (HttpClientErrorException | HttpServerErrorException e) {
-            log.info("Error: " + e.getStatusCode() + " " + e.getStatusText());
+            log.info(e.getStatusCode() + " " + e.getStatusText());
         }
         return null;
     }
@@ -50,7 +50,7 @@ public class RestTemplateWebServiceSpringClient {
             restTemplate.postForEntity(url, user, User.class);
             log.info(HttpStatus.CREATED + " " + HttpStatus.CREATED.name());
         } catch (HttpClientErrorException | HttpServerErrorException e) {
-            log.info("Error: " + e.getStatusCode() + " " + e.getStatusText());
+            log.info(e.getStatusCode() + " " + e.getStatusText());
         }
     }
 
@@ -59,7 +59,7 @@ public class RestTemplateWebServiceSpringClient {
             restTemplate.put(url+userId, user, User.class);
             log.info(HttpStatus.OK + " " + HttpStatus.OK.name());
         } catch (HttpClientErrorException | HttpServerErrorException e) {
-            log.info("Error: " + e.getStatusCode() + " " + e.getStatusText());
+            log.info(e.getStatusCode() + " " + e.getStatusText());
         }
     }
 
@@ -68,7 +68,7 @@ public class RestTemplateWebServiceSpringClient {
             restTemplate.delete(url+userId);
             log.info(HttpStatus.OK + " " + HttpStatus.OK.name());
         } catch (HttpClientErrorException | HttpServerErrorException e) {
-            log.info("Error: " + e.getStatusCode() + " " + e.getStatusText());
+            log.info(e.getStatusCode() + " " + e.getStatusText());
         }
     }
 
